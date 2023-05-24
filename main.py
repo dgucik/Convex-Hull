@@ -1,6 +1,6 @@
-from window import Window
+from main_window import MainWindow
 
 
 if __name__ == '__main__':
-    window = Window(1200, 800, "Convex hull")
+    window = MainWindow(1200, 800, "Convex hull")
     window.run()
