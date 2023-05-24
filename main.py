@@ -1,6 +1,6 @@
-from main_window import MainWindow
+from main_application import MainApplication
 
 
 if __name__ == '__main__':
-    window = MainWindow(1200, 800, "Convex hull")
-    window.run()
+    app = MainApplication(1200, 800, "Convex hull")
+    app.run()

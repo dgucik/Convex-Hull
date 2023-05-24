@@ -2,7 +2,7 @@ import pygame
 from coordinate_system import CoordinateSystem
 
 
-class MainWindow:
+class MainApplication:
     def __init__(self, width, height, name):
         self.width = width
         self.height = height
