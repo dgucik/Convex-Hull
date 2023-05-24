@@ -16,7 +16,7 @@ class Window:
         pygame.display.set_caption(self.name)
 
         self.screen = pygame.display.set_mode((self.width, self.height))
-        self.coordinate_system = CoordinateSystem(self.screen)
+        self.coordinate_system = CoordinateSystem(self.width, self.height, self.screen)
 
     def __handle_events(self):
         for event in pygame.event.get():
