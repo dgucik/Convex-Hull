@@ -38,7 +38,25 @@ class MainWindow:
             self.tab_pressed = False
 
     def update(self):
-        pass
+        max_point_y = self.one_inc_value * 19
+        max_point_x = self.one_inc_value * 28
+        for point in PointsArray.array:
+            if abs(point[0]) > max_point_x:
+                max_point_x = abs(point[0])
+            if abs(point[1]) > max_point_y:
+                max_point_y = abs(point[1])
+
+        if max_point_y > self.one_inc_value * 19 and max_point_x > self.one_inc_value * 28:
+            if (max_point_y - self.one_inc_value * 19) > (max_point_x - self.one_inc_value * 28):
+                self.one_inc_value = max_point_y // 19
+            elif (max_point_x - self.one_inc_value * 28) > (max_point_y - self.one_inc_value * 19):
+                self.one_inc_value = max_point_y // 28
+            else:
+                self.one_inc_value = max_point_y // 19
+        elif max_point_y > self.one_inc_value * 19:
+            self.one_inc_value = max_point_y // 19
+        elif max_point_x > self.one_inc_value * 28:
+            self.one_inc_value = max_point_x // 19
 
     def draw(self):
         self.screen.fill(self.background_color)
