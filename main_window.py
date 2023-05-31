@@ -28,7 +28,7 @@ class MainWindow:
     def get_surface(self):
         return self.screen
 
-    def handle_events(self, event_type):
+    def handle_events(self, event):
         pass
 
     def update(self):

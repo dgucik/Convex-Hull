@@ -21,8 +21,8 @@ class Application:
             if event.type == pygame.QUIT:
                 self.running = False
 
-            self.main_window.handle_events(event.type)
-            self.sub_window.handle_events(event.type)
+            self.main_window.handle_events(event)
+            self.sub_window.handle_events(event)
 
     def __update(self):
         self.main_window.update()

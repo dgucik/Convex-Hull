@@ -27,7 +27,13 @@ class Button:
         self.button_text_x = ((self.width - self.button_text.get_width()) // 2)
 
     def update(self, mouse_pos, mouse_click):
-        pass
+        if self.button_state != BUTTON_STATES[3]:
+            if self.button_rect.collidepoint(mouse_pos) & mouse_click:
+                self.button_state = BUTTON_STATES[1]
+            elif self.button_rect.collidepoint(mouse_pos):
+                self.button_state = BUTTON_STATES[2]
+            elif self.button_state == BUTTON_STATES[2]:
+                self.button_state = BUTTON_STATES[0]
 
     def draw(self, surface):
         if self.button_state == 'RELEASED':
@@ -39,5 +45,6 @@ class Button:
         elif self.button_state == 'INACTIVE':
             pygame.draw.rect(surface, self.button_inactive_color, self.button_rect)
 
-        pygame.draw.rect(surface, self.button_border_color, (self.x_pos, self.y_pos, self.width, self.height), self.border_width)
+        pygame.draw.rect(surface, self.button_border_color, (self.x_pos, self.y_pos, self.width, self.height),
+                         self.border_width)
         surface.blit(self.button_text, (self.button_text_x + self.x_pos, self.button_rect.y + 7))
