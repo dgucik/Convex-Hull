@@ -24,9 +24,10 @@ class TextBox:
         self.text_box_active = False
 
     def get_text(self):
-        txt = self.input_text
+        return self.input_text
+
+    def clear_text(self):
         self.input_text = ""
-        return txt
 
     def handle_events(self, event):
         if event.type == pygame.KEYDOWN:

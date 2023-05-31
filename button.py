@@ -30,10 +30,13 @@ class Button:
         if self.button_state != BUTTON_STATES[3]:
             if self.button_rect.collidepoint(mouse_pos) & mouse_click:
                 self.button_state = BUTTON_STATES[1]
+                return True
             elif self.button_rect.collidepoint(mouse_pos):
                 self.button_state = BUTTON_STATES[2]
             elif self.button_state == BUTTON_STATES[2]:
                 self.button_state = BUTTON_STATES[0]
+
+        return False
 
     def draw(self, surface):
         if self.button_state == 'RELEASED':

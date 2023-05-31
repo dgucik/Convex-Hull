@@ -1,5 +1,6 @@
 import pygame.display
 
+from points_array import PointsArray
 from relative_point import RelativePoint
 from text_object import TextObject
 
@@ -25,11 +26,16 @@ class MainWindow:
 
         self.screen = pygame.display.set_mode(self.window_size)
 
+        self.tab_pressed = False
+
     def get_surface(self):
         return self.screen
 
     def handle_events(self, event):
-        pass
+        if pygame.key.get_pressed()[pygame.K_TAB]:
+            self.tab_pressed = True
+        else:
+            self.tab_pressed = False
 
     def update(self):
         pass
@@ -65,3 +71,5 @@ class MainWindow:
                                     RelativePoint.point(self.window_size, -2 * self.pixels_per_inc,
                                                         (self.window_size[1] // 2) - (self.pixels_per_inc // 2)),
                                     self.font2, self.text_color2)
+
+        PointsArray.draw_points(self.screen, self.pixels_per_inc, self.one_inc_value, self.tab_pressed)

@@ -1,5 +1,6 @@
 import pygame
 from button import Button
+from points_array import PointsArray
 from relative_point import RelativePoint
 from text_box import TextBox
 from text_object import TextObject
@@ -7,6 +8,7 @@ from text_object import TextObject
 
 class SubWindow:
     def __init__(self, main_window_size):
+        self.main_window_size = main_window_size
         self.sub_window_size = (main_window_size[0] // 4, main_window_size[1] // 4)
         self.position = (main_window_size[0] - self.sub_window_size[0], main_window_size[1] - self.sub_window_size[1])
         self.border_width = 1
@@ -63,12 +65,25 @@ class SubWindow:
 
     def update(self):
         if not self.space_active:
-            self.add_button.update(self.mouse_pos, self.mouse_click)
-            self.start_button.update(self.mouse_pos, self.mouse_click)
-            self.restart_button.update(self.mouse_pos, self.mouse_click)
+            add_button_pressed = self.add_button.update(self.mouse_pos, self.mouse_click)
+            start_button_pressed = self.start_button.update(self.mouse_pos, self.mouse_click)
+            restart_button_pressed = self.restart_button.update(self.mouse_pos, self.mouse_click)
 
             self.text_box_xcor.update(self.mouse_pos, self.mouse_click)
             self.text_box_ycor.update(self.mouse_pos, self.mouse_click)
+
+            if add_button_pressed:
+                x = self.text_box_xcor.get_text()
+                y = self.text_box_ycor.get_text()
+                if x != "" and y != "" and x != "-" and y != "-":
+
+                    PointsArray.add_point((int(x), int(y)))
+                    self.text_box_xcor.clear_text()
+                    self.text_box_ycor.clear_text()
+            if start_button_pressed:
+                pass
+            if restart_button_pressed:
+                PointsArray.clear_array()
 
     def draw(self, surface):
         if not self.space_active:
