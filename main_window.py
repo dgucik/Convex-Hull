@@ -1,17 +1,16 @@
-import pygame
-from text_object import TextObject
+import pygame.display
+
 from relative_point import RelativePoint
+from text_object import TextObject
 
 
-class CoordinateSystem:
-    def __init__(self, width, height, screen):
-        self.width = width
-        self.height = height
-        self.window_size = (width, height)
-        self.screen = screen
+class MainWindow:
+    def __init__(self, window_size):
+        self.window_size = window_size
+        self.background_color = (255, 255, 255)
 
-        self.origin_x = width // 2
-        self.origin_y = height // 2
+        self.origin_x = self.window_size[0] // 2
+        self.origin_y = self.window_size[1] // 2
 
         self.axis_color = (150, 150, 150)
         self.axis_color2 = (230, 230, 230)
@@ -24,18 +23,28 @@ class CoordinateSystem:
         self.pixels_per_inc = 20  # should not be changed
         self.one_inc_value = 1
 
-    def update(self):  # TODO: algorithm to adjust one_inc_value in relation to pointsArray
+        self.screen = pygame.display.set_mode(self.window_size)
+
+    def get_surface(self):
+        return self.screen
+
+    def handle_events(self, event_type):
         pass
 
-    def draw_surface(self):
-        pygame.draw.line(self.screen, self.axis_color, (0, self.origin_y), (self.width, self.origin_y), 2)
-        pygame.draw.line(self.screen, self.axis_color, (self.origin_x, 0), (self.origin_x, self.height), 2)
+    def update(self):
+        pass
 
-        for x in range(0, self.width, self.pixels_per_inc):
-            pygame.draw.line(self.screen, self.axis_color2, (x, 0), (x, self.height), 1)
+    def draw(self):
+        self.screen.fill(self.background_color)
+
+        pygame.draw.line(self.screen, self.axis_color, (0, self.origin_y), (self.window_size[0], self.origin_y), 2)
+        pygame.draw.line(self.screen, self.axis_color, (self.origin_x, 0), (self.origin_x, self.window_size[1]), 2)
+
+        for x in range(0, self.window_size[0], self.pixels_per_inc):
+            pygame.draw.line(self.screen, self.axis_color2, (x, 0), (x, self.window_size[1]), 1)
             pygame.draw.line(self.screen, self.axis_color, (x, self.origin_y - 5), (x, self.origin_y + 5), 2)
-        for y in range(0, self.height, self.pixels_per_inc):
-            pygame.draw.line(self.screen, self.axis_color2, (0, y), (self.width, y), 1)
+        for y in range(0, self.window_size[1], self.pixels_per_inc):
+            pygame.draw.line(self.screen, self.axis_color2, (0, y), (self.window_size[0], y), 1)
             pygame.draw.line(self.screen, self.axis_color, (self.origin_x - 5, y), (self.origin_x + 5, y), 2)
 
         TextObject.draw_text_object(self.screen, f"{self.one_inc_value}",
@@ -48,11 +57,11 @@ class CoordinateSystem:
 
         TextObject.draw_text_object(self.screen, "x",
                                     RelativePoint.point(self.window_size,
-                                                        (self.width // 2) - self.pixels_per_inc,
+                                                        (self.window_size[0] // 2) - self.pixels_per_inc,
                                                         -1.5 * self.pixels_per_inc),
                                     self.font2, self.text_color2)
 
         TextObject.draw_text_object(self.screen, "y",
                                     RelativePoint.point(self.window_size, -2 * self.pixels_per_inc,
-                                                        (self.height // 2) - (self.pixels_per_inc // 2)),
+                                                        (self.window_size[1] // 2) - (self.pixels_per_inc // 2)),
                                     self.font2, self.text_color2)
