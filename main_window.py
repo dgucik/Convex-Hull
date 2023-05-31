@@ -22,7 +22,7 @@ class MainWindow:
         self.font2 = pygame.font.SysFont("arial", 15, True, False)
 
         self.pixels_per_inc = 20  # should not be changed
-        self.one_inc_value = 1
+        PointsArray.inc_value= 1
 
         self.screen = pygame.display.set_mode(self.window_size)
 
@@ -38,25 +38,31 @@ class MainWindow:
             self.tab_pressed = False
 
     def update(self):
-        max_point_y = self.one_inc_value * 19
-        max_point_x = self.one_inc_value * 28
+        max_point_y = PointsArray.inc_value * 19
+        max_point_x = PointsArray.inc_value * 28
         for point in PointsArray.array:
             if abs(point[0]) > max_point_x:
                 max_point_x = abs(point[0])
             if abs(point[1]) > max_point_y:
                 max_point_y = abs(point[1])
 
-        if max_point_y > self.one_inc_value * 19 and max_point_x > self.one_inc_value * 28:
-            if (max_point_y - self.one_inc_value * 19) > (max_point_x - self.one_inc_value * 28):
-                self.one_inc_value = max_point_y // 19
-            elif (max_point_x - self.one_inc_value * 28) > (max_point_y - self.one_inc_value * 19):
-                self.one_inc_value = max_point_y // 28
+        if max_point_y > PointsArray.inc_value * 19 and max_point_x > PointsArray.inc_value* 28:
+            if (max_point_y - PointsArray.inc_value * 19) > (max_point_x - PointsArray.inc_value* 28):
+                print("1")
+                PointsArray.inc_value = max_point_y // 20 + 1
+            elif (max_point_x - PointsArray.inc_value * 28) > (max_point_y - PointsArray.inc_value* 19):
+                print("2")
+                PointsArray.inc_value = max_point_x // 28 + 1
             else:
-                self.one_inc_value = max_point_y // 19
-        elif max_point_y > self.one_inc_value * 19:
-            self.one_inc_value = max_point_y // 19
-        elif max_point_x > self.one_inc_value * 28:
-            self.one_inc_value = max_point_x // 19
+                print("3")
+                PointsArray.inc_value = max_point_y // 19 + 1
+        elif max_point_y > PointsArray.inc_value * 19:
+            print("4")
+            PointsArray.inc_value = max_point_y // 19 + 1
+        elif max_point_x > PointsArray.inc_value * 28:
+            print("5")
+            PointsArray.inc_value = max_point_x // 28 + 1
+
 
     def draw(self):
         self.screen.fill(self.background_color)
@@ -71,11 +77,11 @@ class MainWindow:
             pygame.draw.line(self.screen, self.axis_color2, (0, y), (self.window_size[0], y), 1)
             pygame.draw.line(self.screen, self.axis_color, (self.origin_x - 5, y), (self.origin_x + 5, y), 2)
 
-        TextObject.draw_text_object(self.screen, f"{self.one_inc_value}",
+        TextObject.draw_text_object(self.screen, f"{PointsArray.inc_value}",
                                     RelativePoint.point(self.window_size, self.pixels_per_inc, -self.pixels_per_inc),
                                     self.font, self.text_color)
 
-        TextObject.draw_text_object(self.screen, f"{self.one_inc_value}",
+        TextObject.draw_text_object(self.screen, f"{PointsArray.inc_value}",
                                     RelativePoint.point(self.window_size, -self.pixels_per_inc, self.pixels_per_inc),
                                     self.font, self.text_color)
 
@@ -90,4 +96,4 @@ class MainWindow:
                                                         (self.window_size[1] // 2) - (self.pixels_per_inc // 2)),
                                     self.font2, self.text_color2)
 
-        PointsArray.draw_points(self.screen, self.pixels_per_inc, self.one_inc_value, self.tab_pressed)
+        PointsArray.draw_points(self.screen, self.pixels_per_inc, self.tab_pressed)

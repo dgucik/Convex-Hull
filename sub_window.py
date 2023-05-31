@@ -76,7 +76,6 @@ class SubWindow:
                 x = self.text_box_xcor.get_text()
                 y = self.text_box_ycor.get_text()
                 if x != "" and y != "" and x != "-" and y != "-":
-
                     PointsArray.add_point((int(x), int(y)))
                     self.text_box_xcor.clear_text()
                     self.text_box_ycor.clear_text()
@@ -84,6 +83,7 @@ class SubWindow:
                 pass
             if restart_button_pressed:
                 PointsArray.clear_array()
+                PointsArray.inc_value = 1
 
     def draw(self, surface):
         if not self.space_active:
