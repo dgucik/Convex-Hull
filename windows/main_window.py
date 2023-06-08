@@ -26,10 +26,12 @@ class MainWindow:
         self.axis_color2 = (230, 230, 230)
 
         # Kolory napisów
+        self.text_color_shape = (0, 0, 0)
         self.text_color = (150, 150, 150)
         self.text_color2 = (50, 50, 50)
 
         # Czcionki napisów
+        self.font_shape = pygame.font.SysFont("arial", 30, True, False)
         self.font = pygame.font.SysFont("arial", 10, True, False)
         self.font2 = pygame.font.SysFont("arial", 15, True, False)
 
@@ -134,3 +136,7 @@ class MainWindow:
 
         # Rysowanie współrzędnych
         PointCollection.draw_points(self.screen, True) #self.tab_pressed)
+
+        # Napis informujący o kształcie otoczki
+        if self.tab_pressed:
+            TextObject.draw_text_object(self.screen, PointCollection.convex_hull_shape, (200, 50), self.font_shape, self.text_color_shape)
