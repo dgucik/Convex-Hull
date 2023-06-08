@@ -52,7 +52,11 @@ class TextBox:
                 if self.input_text == "" and event.key == pygame.K_MINUS:
                     self.input_text += "-"
                 elif event.unicode.isnumeric():
-                    self.input_text += event.unicode
+                    if event.unicode == '0':
+                        if self.input_text != "" and self.input_text != "-":
+                            self.input_text += event.unicode
+                    else:
+                        self.input_text += event.unicode
                 elif event.key == pygame.K_BACKSPACE:
                     self.input_text = self.input_text[:-1]
 
