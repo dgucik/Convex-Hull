@@ -1,8 +1,10 @@
 import pygame
-from components.button import Button
+from components.button import Button, BUTTON_STATES
 from containters.point_collection import PointCollection
 from components.text_box import TextBox
 from components.text_object import TextObject
+from utils.complex_hull import *
+from utils.complex_hull_helpers import convert_to_point, convert_to_point_reverse
 
 
 class SubWindow:
@@ -37,7 +39,7 @@ class SubWindow:
         self.add_button = Button(self.button_x, self.add_button_y, self.button_width, self.button_height, "Dodaj punkt")
 
         self.start_button_y = ((self.sub_window_size[1] - self.button_height) // 2) + 40
-        self.start_button = Button(self.button_x, self.start_button_y, self.button_width, self.button_height, "Otoczka")
+        self.start_button = Button(self.button_x, self.start_button_y, self.button_width, self.button_height, "Znajdź Otoczkę")
 
         self.restart_button_y = ((self.sub_window_size[1] - self.button_height) // 2) + 80
         self.restart_button = Button(self.button_x, self.restart_button_y, self.button_width, self.button_height,
@@ -106,8 +108,21 @@ class SubWindow:
                     self.text_box_xcor.clear_text()
                     self.text_box_ycor.clear_text()
             if start_button_pressed:
-                pass
+                self.add_button.button_state = BUTTON_STATES[3]
+                self.start_button.button_state = BUTTON_STATES[3]
+
+                # Algorytm do znajdowania otoczki wypukłej
+                complex_hull = ComplexHull(convert_to_point(PointCollection.points))
+                complex_hull_graham = complex_hull.graham()
+
+                PointCollection.convex_hull_shape = complex_hull.check_shape(complex_hull_graham)
+                PointCollection.points_convex_hull = convert_to_point_reverse(complex_hull_graham)
+
             if restart_button_pressed:
+                self.add_button.button_state = BUTTON_STATES[0]
+                self.start_button.button_state = BUTTON_STATES[0]
+                self.restart_button.button_state = BUTTON_STATES[0]
+
                 PointCollection.clear_array()
                 PointCollection.grid_unit = 1
 

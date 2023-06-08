@@ -1,6 +1,7 @@
 import pygame.display
 
 from containters.point_collection import PointCollection
+from utils.complex_hull_helpers import convex_hull_draw
 from utils.relative_point import RelativePoint
 from components.text_object import TextObject
 
@@ -128,5 +129,8 @@ class MainWindow:
                                                                   (self.window_size[1] // 2) - (PointCollection.grid_unit_size // 2)),
                                     self.font2, self.text_color2)
 
+        # Rysowanie otoczki
+        convex_hull_draw(self.screen, PointCollection.points_convex_hull)
+
         # Rysowanie współrzędnych
-        PointCollection.draw_points(self.screen, self.tab_pressed)
+        PointCollection.draw_points(self.screen, True) #self.tab_pressed)

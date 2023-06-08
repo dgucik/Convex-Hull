@@ -6,6 +6,8 @@ from components.text_object import TextObject
 
 class PointCollection:
     points = [] # Tablica przechowująca wszystkie dodane punkty
+    points_convex_hull = [] # Tablica przechowująca punkty należące do otoczki wypukłej
+    convex_hull_shape = "" # Kształt otoczki
     grid_unit = 1 # Wartość siatki współrzędnych
     grid_unit_size = 20 # Ilość pikseli na jeden krok
 
@@ -24,6 +26,8 @@ class PointCollection:
         Czyści kolekcję punktów.
         """
         PointCollection.points.clear()
+        PointCollection.points_convex_hull.clear()
+        PointCollection.convex_hull_shape = ""
 
     @staticmethod
     def draw_points(screen, show_cords = False):
@@ -43,5 +47,10 @@ class PointCollection:
 
             # Wyświetlenie współrzędnych wszystkich punktów
             if show_cords:
-                TextObject.draw_text_object(screen, f"({point[0]}, {point[1]})", RelativePoint.calculate_point(screen.get_size(), x_pos, y_pos + 5),
-                                            pygame.font.SysFont("arial", 14, False, False), (0, 0, 0))
+                if point in PointCollection.points_convex_hull:
+                    TextObject.draw_text_object(screen, f"({point[0]}, {point[1]})",
+                                                RelativePoint.calculate_point(screen.get_size(), x_pos, y_pos + 5),
+                                                pygame.font.SysFont("arial", 14, True, False), (0, 0, 0))
+                else:
+                    TextObject.draw_text_object(screen, f"({point[0]}, {point[1]})", RelativePoint.calculate_point(screen.get_size(), x_pos, y_pos + 5),
+                                                pygame.font.SysFont("arial", 14, False, False), (0, 0, 0))
