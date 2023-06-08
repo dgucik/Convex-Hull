@@ -35,14 +35,6 @@ class TextBox:
         self.input_text = ""
         self.text_box_active = False
 
-    def get_text(self):
-        """
-        Zwraca aktualnie wprowadzony tekst w TextBoxie.
-
-        :return: Aktualnie wprowadzony tekst.
-        """
-        return self.input_text
-
     def clear_text(self):
         """
         Czyści tekst wprowadzony w TextBoxie.
@@ -80,7 +72,8 @@ class TextBox:
         """
         Rysuje TextBox na powierzchni.
         """
-        pygame.draw.rect(self.screen, self.border_color, self.text_box_rect, 2)
         pygame.draw.rect(self.screen, self.background_color, self.text_box_rect)
+        if self.text_box_active:
+            pygame.draw.rect(self.screen, self.border_color, self.text_box_rect, 2)
 
         self.font.render_to(self.screen, (self.text_box_x + 5, self.text_box_y + 5), self.input_text[-3:], self.text_color)

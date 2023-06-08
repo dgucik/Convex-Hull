@@ -99,8 +99,8 @@ class SubWindow:
 
             # Obsługa przycisków w podoknie
             if add_button_pressed:
-                x = self.text_box_xcor.get_text()
-                y = self.text_box_ycor.get_text()
+                x = self.text_box_xcor.input_text
+                y = self.text_box_ycor.input_text
                 if x != "" and y != "" and x != "-" and y != "-":
                     PointCollection.add_point((int(x), int(y)))
                     self.text_box_xcor.clear_text()
