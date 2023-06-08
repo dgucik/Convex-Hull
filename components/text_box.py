@@ -1,4 +1,5 @@
 import pygame
+from pygame import freetype
 
 
 class TextBox:
@@ -18,7 +19,7 @@ class TextBox:
         self.text_color = (0, 0, 0)
 
         # Czcionka
-        self.font = pygame.freetype.Font(None, 24)
+        self.font = freetype.Font(None, 24)
 
         # Wymiary obszaru
         self.text_box_width = 50
